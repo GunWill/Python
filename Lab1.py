@@ -35,3 +35,4 @@ print("The max value is", max(measurement1, measurement2, measurement3, measurem
 print("The min value is", min(measurement1, measurement2, measurement3, measurement4, measurement5)) 
 measurements = [measurement1, measurement2, measurement3, measurement4, measurement5] #Put measurements in array to divide by a "dynamic" length, even though its always a length of 5
 print("The average value is", sum(measurements)/len(measurements)) 
+
