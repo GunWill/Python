@@ -13,17 +13,17 @@ def m1() -> None: #Defined a function to call back to in case an invalid measure
         print("Invalid measurement, please begin again") #Prompts the user to enter the measurements again
         m1() 
    
-<<<<<<< Updated upstream
+
 print("The max value is", max(measurement1, measurement2, measurement3, measurement4, measurement5)) 
 print("The min value is", min(measurement1, measurement2, measurement3, measurement4, measurement5)) 
 measurements = [measurement1, measurement2, measurement3, measurement4, measurement5] #Put measurements in array to divide by a "dynamic" length, even though its always a length of 5
 print("The average value is", sum(measurements)/len(measurements)) 
 
-=======
+
     print("The max value is", max(measurement1, measurement2, measurement3, measurement4, measurement5)) #Computes max, wish I used the array for this but I didnt think about it until later
     print("The min value is", min(measurement1, measurement2, measurement3, measurement4, measurement5)) #Computes min
     measurements = [measurement1, measurement2, measurement3, measurement4, measurement5] #Put measurements in array to divide by a "dynamic" length, even though its always a length of 5
     print("The average value is", sum(measurements)/len(measurements))  #Computes average w/ array values & length
     print("The range of values is: ", max(measurements)-min(measurements)) #Computes range w/ array values & length
 m1() #Calls function
->>>>>>> Stashed changes
+
