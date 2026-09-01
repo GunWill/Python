@@ -1,11 +1,43 @@
 from board import ConnectFourBoard, InvalidMoveError
-from player import ConsolePlayer
+from player import ConsolePlayer, CPUPlayer
 
 class ConnectFourGame:
     """Represents a Connect 4 game. Manages board and players."""
 
-    def __init__(self, rows=6, cols=7, p1_type=ConsolePlayer, p2_type=ConsolePlayer):
+    def __init__(self, rows=6, cols=7, p1_type=ConsolePlayer, p2_type=ConsolePlayer, diff = "Easy"):
         """Initialize a new game"""
+        while True: #Runs while true
+            try: #Tries a user input if they want a local console match or a CPU match
+                p2_type1=int(input("Enter 1 for P2 console, Enter 2 for P2 CPU: ")) #Prompts user to choose
+                if p2_type1 == 1: #If player chooses 1
+                    p2_type = ConsolePlayer #It will be a local console match
+                    break #End while true loop
+                elif p2_type1 == 2: #If user chooses two
+                    p2_type = CPUPlayer #It will be a CPU match
+                    break #Ends while true loop
+                else:
+                    print("Invalid input, need 1 or 2") #If any other input, a try-catch statement is used
+            except ValueError: #Value error raised, prompts user again
+                print("Invalid Input, need 1 or 2")
+
+        while True: #Second while true loop to choose difficulty of game
+            try: #Another try-catch statement for difficulty
+                diff=int(input("Choose a difficulty - 1:Easy, 2:Medium, 3:Hard, or 4:Super Hard: ")) #Prompts user to choose difficulty, casts to int
+                if diff == 1: #If user types 1
+                    self.diff = "Easy" #Difficulty set to easy
+                    break #Break while true loop
+                elif diff == 2: #if user types 2
+                    self.diff = "Medium" #Difficulty set to medium
+                    break #Break while true loop 
+                elif diff == 3: #If user types 3 
+                    self.diff = "Hard" #Difficulty set to hard
+                    break #Break while true loop
+                elif diff == 4:  #If the user types 4
+                    self.diff = "Super Hard" #Difficulty set to super hard
+                    break #Break while true loop
+                else: print("Invalid input, retype 1, 2, 3, or 4 for Easy, Medium, Hard, or Super Hard difficulty respectively") #If 1, 2, 3, or 4 is not inputted
+            except ValueError: #Raises ValueError if unexpected input is caught
+                print("Invalid input, retype 1, 2, 3, or 4 for Easy, Medium, Hard, or Super Hard difficulty respectively") #Same as before
 
         # Set up board
         self.board = ConnectFourBoard(rows, cols)
@@ -45,18 +77,19 @@ class ConnectFourGame:
             # Get the next player's move
             move_is_invalid = True
             while move_is_invalid: # Keep trying until we get a valid move
-                col = current_player.move()
+                col = current_player.move(board=self.board, opponent_symbol=self.player_1.symbol, diff = self.diff) #Included opponent_symbol and diff to be used in player.py
                 try:
                     self.board.add_piece(col, current_player.symbol)
                     move_is_invalid = False # If we make it to this line, move was valid
                 except InvalidMoveError as err:
-                    print(err.message) # Otherwise display why the move was not valid
+                    print(str(err)) # Otherwise display why the move was not valid
 
             # Increment the turn count
             self.turn += 1
 
             # Check for winners
             if self.board.check_winner():
+                self.board.display()
                 print(f'{current_player.name} wins!')
                 break # Get out of the while loop without triggering the else clause
         else:
