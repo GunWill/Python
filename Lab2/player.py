@@ -76,6 +76,28 @@ class CPUPlayer(AbstractPlayer):
                     elif diff == "Super Hard": #If super hard difficulty
                         return col #Never blunder   
 
+        #UNDER CONSTRUCTION:CPU Smarter plays -> Can use this logic for better diagonal blocking
+        #Horizontal
+        for col in range(board.num_cols):
+            for row in range(board.num_rows):
+                if board.rows[row][col]==" ":
+                    continue
+                if col + 1 < board.num_cols and board.rows[row][col+1] == board.rows[row][col]: 
+                    if (col + 2 < board.num_cols and board.rows[row][col + 2] == " " and col + 3 <= board.num_cols and board.rows[row][col + 3] == " "):
+                        return col + 2
+                    if (col - 1 >= 0 and board.rows[row][col-1] == " " and col - 2 >= 0 and board.row[row][col - 2] == " "):
+                        return col - 1
+        #Vertical
+        for col in range (board.num_cols):
+            for row in range(board.num_rows):
+                if board.rows[row][col] == " ":
+                    continue
+            
+                    
+                   
+                
+
+        
         #GO FOR THE BEST MOVE
         all_columns=[3, 2, 4, 1, 5, 0, 6]
         preferred_columns = [3, 2, 4] #Prefer to play towards the middle of board, as it interacts with highest number of winning lines
@@ -96,6 +118,8 @@ class CPUPlayer(AbstractPlayer):
            
         return 0  #ends move method
     #I feel like I went nutso bananas on this and am super proud  
+
+
                 
        
 

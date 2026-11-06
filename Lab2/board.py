@@ -37,10 +37,10 @@ class ConnectFourBoard:
                 # Check vertical -> Checks if the possible connect 4 is within the board's range and checks for a vertical connect 4
                 if row + 3 <self.num_rows and self.rows[row][col] == self.rows[row + 1][col] == self.rows[row+2][col] == self.rows [row+3][col]:
                     return True
-                # Check diagonal (up-right) -> Checks if the possible connect 4 is within the board's range and checks for an up-right (from left to right) connect 4
+                # Check diagonal (down-left) -> Checks if the possible connect 4 is within the board's range and checks for an down-left (from left to right) connect 4
                 if row - 3 >=0 and col + 3 < self.num_cols and self.rows[row][col] == self.rows[row - 1][col+1] == self.rows[row - 2][col+2]==self.rows[row-3][col+3]:
                     return True
-                # Check diagonal (down-right) -> Checks if the possible connect 4 is withing the board's range and checks for a down-right (from left to right) connect 4
+                # Check diagonal (up-right) -> Checks if the possible connect 4 is withing the board's range and checks for an up-right (from left to right) connect 4
                 if row + 3 <self.num_rows and col + 3 < self.num_cols and self.rows[row][col] == self.rows[row+1][col+1] == self.rows[row+2][col+2] == self.rows[row+3][col+3]:
                     return True
         return False # Not a win if none of the above conditions are met

@@ -1,6 +1,7 @@
 from board import ConnectFourBoard, InvalidMoveError
 from player import ConsolePlayer, CPUPlayer
 
+
 class ConnectFourGame:
     """Represents a Connect 4 game. Manages board and players."""
 
@@ -39,6 +40,19 @@ class ConnectFourGame:
             except ValueError: #Raises ValueError if unexpected input is caught
                 print("Invalid input, retype 1, 2, 3, or 4 for Easy, Medium, Hard, or Super Hard difficulty respectively") #Same as before
 
+        while True:
+            interface_choice = int(input("Choose interface: 1-Console, 2-GUI"))
+            if interface_choice == 1:
+                self.interface = "console"
+                break
+            elif interface_choice == 2:
+                self.interface = "gui"
+                print("You have chosen GUI!")
+                print("Player symbols must be entered, but they will not be necessary")
+                print("Click the column in which you would like to place your piece. Good Luck!")
+                break
+            else:
+                print("Please enter a 1 or 2")
         # Set up board
         self.board = ConnectFourBoard(rows, cols)
 
@@ -60,41 +74,46 @@ class ConnectFourGame:
 
         # Clear the board
         self.board.clear()
-
+        if self.interface == "console":
         # Main game loop
-        while not self.board.is_full():
-            # Figure out whose turn it is
-            match self.turn % 2:
-                case 0:
-                    current_player = self.player_1
-                case 1:
-                    current_player = self.player_2
-            print(f"{current_player.name}'s turn.")
+            while not self.board.is_full():
+                # Figure out whose turn it is
+                match self.turn % 2:
+                    case 0:
+                        current_player = self.player_1
+                    case 1:
+                        current_player = self.player_2
+                print(f"{current_player.name}'s turn.")
 
-            # Display the board
-            self.board.display()
-
-            # Get the next player's move
-            move_is_invalid = True
-            while move_is_invalid: # Keep trying until we get a valid move
-                col = current_player.move(board=self.board, opponent_symbol=self.player_1.symbol, diff = self.diff) #Included opponent_symbol and diff to be used in player.py
-                try:
-                    self.board.add_piece(col, current_player.symbol)
-                    move_is_invalid = False # If we make it to this line, move was valid
-                except InvalidMoveError as err:
-                    print(str(err)) # Otherwise display why the move was not valid
-
-            # Increment the turn count
-            self.turn += 1
-
-            # Check for winners
-            if self.board.check_winner():
+                # Display the board
                 self.board.display()
-                print(f'{current_player.name} wins!')
-                break # Get out of the while loop without triggering the else clause
-        else:
-            # If we reach this line, the board is full
-            print('No winner!')
+
+                # Get the next player's move
+                move_is_invalid = True
+                while move_is_invalid: # Keep trying until we get a valid move
+                    col = current_player.move(board=self.board, opponent_symbol=self.player_1.symbol, diff = self.diff) #Included opponent_symbol and diff to be used in player.py
+                    try:
+                        self.board.add_piece(col, current_player.symbol)
+                        move_is_invalid = False # If we make it to this line, move was valid
+                    except InvalidMoveError as err:
+                        print(str(err)) # Otherwise display why the move was not valid
+
+                # Increment the turn count
+                self.turn += 1
+
+                # Check for winners
+                if self.board.check_winner():
+                    self.board.display()
+                    print(f'{current_player.name} wins!')
+                    break # Get out of the while loop without triggering the else clause
+            else:
+                # If we reach this line, the board is full
+                print('No winner!')
+        elif self.interface == "gui":
+            from gui import ConnectFourGUI
+            gui =ConnectFourGUI(self)
+            gui.run()
+            
 
     def get_player_symbol(self, player_name):
         """Request a valid symbol to use for a player."""
